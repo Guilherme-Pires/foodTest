@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "notificador.email.host-server",
+    "type": "java.lang.String",
+    "description": "A description for 'notificador.email.host-server'"
+  },
+  {
+    "name": "notificador.email.porta-server",
+    "type": "java.lang.String",
+    "description": "A description for 'notificador.email.porta-server'"
+  },
+  {
+    "name": "notificador.email.port-server",
+    "type": "java.lang.String",
+    "description": "A description for 'notificador.email.port-server'"
+  }
+]}
