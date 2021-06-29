@@ -25,7 +25,7 @@ public class CadastroCozinhaService {
 			cozinhaRepository.remover(cozinhaId);
 			
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(String.format("Não existe um cadastro de cozinha com o códifo %d", cozinhaId));
+			throw new EntidadeNaoEncontradaException(String.format("Não existe um cadastro de cozinha com o código %d", cozinhaId));
 			
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(String.format("Cozinha de código %d não pode ser excluída pois está em uso.", cozinhaId));
