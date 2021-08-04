@@ -1,19 +1,21 @@
 package com.guilherme.foodtest;
 
-import com.guilherme.foodtest.domain.model.Cozinha;
-import com.guilherme.foodtest.domain.service.CadastroCozinhaService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.validation.ConstraintViolationException;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@ExtendWith(SpringExtension.class)
+import com.guilherme.foodtest.domain.exception.CozinhaNaoEncontradaException;
+import com.guilherme.foodtest.domain.exception.EntidadeEmUsoException;
+import com.guilherme.foodtest.domain.model.Cozinha;
+import com.guilherme.foodtest.domain.service.CadastroCozinhaService;
+
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class CadastroCozinhaIntegrationTests {
 
@@ -21,30 +23,32 @@ public class CadastroCozinhaIntegrationTests {
 	private CadastroCozinhaService cadastroCozinha;
 	
 	@Test
-	public void testarCadastroCozinhaComSucesso() {
-		// cenário
+	public void deveAtribuirId_QuandoCadastrarCozinhaComDadosCorretos() {
 		Cozinha novaCozinha = new Cozinha();
 		novaCozinha.setNome("Chinesa");
 		
-		// ação
 		novaCozinha = cadastroCozinha.salvar(novaCozinha);
 		
-		// validação
 		assertThat(novaCozinha).isNotNull();
 		assertThat(novaCozinha.getId()).isNotNull();
 	}
-
-	@Test
-	public void testarCadastroCozinhaSemNome() {
+	
+	@Test(expected = ConstraintViolationException.class)
+	public void deveFalhar_QuandoCadastrarCozinhaSemNome() {
 		Cozinha novaCozinha = new Cozinha();
 		novaCozinha.setNome(null);
-
-		ConstraintViolationException erroEsperado =
-				Assertions.assertThrows(ConstraintViolationException.class, () -> {
-					cadastroCozinha.salvar(novaCozinha);
-				});
-
-		assertThat(erroEsperado).isNotNull();
+		
+		novaCozinha = cadastroCozinha.salvar(novaCozinha);
 	}
-
+	
+	@Test(expected = EntidadeEmUsoException.class)
+    public void deveFalhar_QuandoExcluirCozinhaEmUso() {
+        cadastroCozinha.excluir(1L);
+    }
+	
+	 @Test(expected = CozinhaNaoEncontradaException.class)
+	    public void deveFalhar_QuandoExcluirCozinhaInexistente() {
+	        cadastroCozinha.excluir(100L);
+	    } 
+	
 }
