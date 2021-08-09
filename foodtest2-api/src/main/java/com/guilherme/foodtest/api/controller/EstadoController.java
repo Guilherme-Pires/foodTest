@@ -38,7 +38,7 @@ public class EstadoController {
 	
 	@GetMapping("/{estadoId}")
 	public Estado buscar(@PathVariable Long estadoId) {
-	    return cadastroEstado.buscarOuFalhar(estadoId);
+		return cadastroEstado.buscarOuFalhar(estadoId);
 	}
 	
 	@PostMapping
@@ -48,19 +48,19 @@ public class EstadoController {
 	}
 	
 	@PutMapping("/{estadoId}")
-	public Estado atualizar(
-			@PathVariable Long estadoId, @RequestBody @Valid Estado estado) {
-	    Estado estadoAtual = cadastroEstado.buscarOuFalhar(estadoId);
-	    
-	    BeanUtils.copyProperties(estado, estadoAtual, "id");
-	    
-	    return cadastroEstado.salvar(estadoAtual);
+	public Estado atualizar(@PathVariable Long estadoId,
+			@RequestBody @Valid Estado estado) {
+		Estado estadoAtual = cadastroEstado.buscarOuFalhar(estadoId);
+		
+		BeanUtils.copyProperties(estado, estadoAtual, "id");
+		
+		return cadastroEstado.salvar(estadoAtual);
 	}
 	
 	@DeleteMapping("/{estadoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long estadoId) {
-	    cadastroEstado.excluir(estadoId);	
+		cadastroEstado.excluir(estadoId);	
 	}
 	
 }
