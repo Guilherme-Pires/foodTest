@@ -2,6 +2,7 @@ package com.guilherme.foodtest.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.guilherme.foodtest.domain.exception.RestauranteNaoEncontradoException;
 import com.guilherme.foodtest.domain.model.Cozinha;
@@ -17,6 +18,7 @@ public class CadastroRestauranteService {
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
 	
+	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
 		
