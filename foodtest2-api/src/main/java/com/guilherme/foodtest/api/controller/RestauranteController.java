@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +39,7 @@ public class RestauranteController {
 	private RestauranteModelAssembler restauranteModelAssembler;
 	
 	@Autowired
-	private RestauranteInputDisassembler restauranteInputDisassembler;   
+	private RestauranteInputDisassembler restauranteInputDisassembler;
 	
 	@GetMapping
 	public List<RestauranteModel> listar() {
@@ -70,17 +69,14 @@ public class RestauranteController {
 	public RestauranteModel atualizar(@PathVariable Long restauranteId,
 			@RequestBody @Valid RestauranteInput restauranteInput) {
 		try {
-			Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput);
-			
 			Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 			
-			BeanUtils.copyProperties(restaurante, restauranteAtual, 
-					"id", "formasPagamento", "endereco", "dataCadastro", "produtos");
-
+			restauranteInputDisassembler.copyToDomainObject(restauranteInput, restauranteAtual);
+			
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
 		} catch (CozinhaNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
 	}
-	
+
 }
