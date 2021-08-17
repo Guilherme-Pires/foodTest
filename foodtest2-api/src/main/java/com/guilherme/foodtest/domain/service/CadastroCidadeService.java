@@ -37,21 +37,22 @@ public class CadastroCidadeService {
 	
 	@Transactional
 	public void excluir(Long cidadeId) {
-	    try {
-	        cidadeRepository.deleteById(cidadeId);
-	        
-	    } catch (EmptyResultDataAccessException e) {
-	        throw new CidadeNaoEncontradaException(cidadeId);
-	    
-	    } catch (DataIntegrityViolationException e) {
-	        throw new EntidadeEmUsoException(
-	            String.format(MSG_CIDADE_EM_USO, cidadeId));
-	    }
+		try {
+			cidadeRepository.deleteById(cidadeId);
+			cidadeRepository.flush();
+			
+		} catch (EmptyResultDataAccessException e) {
+			throw new CidadeNaoEncontradaException(cidadeId);
+		
+		} catch (DataIntegrityViolationException e) {
+			throw new EntidadeEmUsoException(
+				String.format(MSG_CIDADE_EM_USO, cidadeId));
+		}
 	}
 	
 	public Cidade buscarOuFalhar(Long cidadeId) {
-	    return cidadeRepository.findById(cidadeId)
-	        .orElseThrow(() -> new CidadeNaoEncontradaException(cidadeId));
+		return cidadeRepository.findById(cidadeId)
+			.orElseThrow(() -> new CidadeNaoEncontradaException(cidadeId));
 	}
 	
 }

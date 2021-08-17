@@ -1,4 +1,4 @@
-package com.guilherme.foodtest.api;
+package com.guilherme.foodtest.api.assembler;
 
 import java.util.List;
 import java.util.stream.Collectors;

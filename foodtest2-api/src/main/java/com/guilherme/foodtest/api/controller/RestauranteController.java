@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.guilherme.foodtest.api.RestauranteInputDisassembler;
-import com.guilherme.foodtest.api.RestauranteModelAssembler;
+import com.guilherme.foodtest.api.assembler.RestauranteInputDisassembler;
+import com.guilherme.foodtest.api.assembler.RestauranteModelAssembler;
 import com.guilherme.foodtest.api.model.RestauranteModel;
 import com.guilherme.foodtest.api.model.input.RestauranteInput;
 import com.guilherme.foodtest.domain.exception.CozinhaNaoEncontradaException;

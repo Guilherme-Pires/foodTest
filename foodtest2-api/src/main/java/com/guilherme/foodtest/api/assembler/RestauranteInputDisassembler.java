@@ -1,4 +1,4 @@
-package com.guilherme.foodtest.api;
+package com.guilherme.foodtest.api.assembler;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
