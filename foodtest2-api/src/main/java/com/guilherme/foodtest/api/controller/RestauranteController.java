@@ -23,6 +23,7 @@ import com.guilherme.foodtest.api.model.input.RestauranteInput;
 import com.guilherme.foodtest.domain.exception.CidadeNaoEncontradaException;
 import com.guilherme.foodtest.domain.exception.CozinhaNaoEncontradaException;
 import com.guilherme.foodtest.domain.exception.NegocioException;
+import com.guilherme.foodtest.domain.exception.RestauranteNaoEncontradoException;
 import com.guilherme.foodtest.domain.model.Restaurante;
 import com.guilherme.foodtest.domain.repository.RestauranteRepository;
 import com.guilherme.foodtest.domain.service.CadastroRestauranteService;
@@ -92,4 +93,37 @@ public class RestauranteController {
 	public void inativar(@PathVariable Long restauranteId) {
 		cadastroRestaurante.inativar(restauranteId);
 	}
+	
+	@PutMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void ativarMultiplos(@RequestBody List<Long> restauranteIds) {
+		try {
+			cadastroRestaurante.ativar(restauranteIds);
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
+	
+	@DeleteMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void inativarMultiplos(@RequestBody List<Long> restauranteIds) {
+		try {
+			cadastroRestaurante.inativar(restauranteIds);
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
+
+	@PutMapping("/{restauranteId}/abertura")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void abrir(@PathVariable Long restauranteId) {
+		cadastroRestaurante.abrir(restauranteId);
+	}
+	
+	@PutMapping("/{restauranteId}/fechamento")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void fechar(@PathVariable Long restauranteId) {
+		cadastroRestaurante.fechar(restauranteId);
+	}
+	
 }
