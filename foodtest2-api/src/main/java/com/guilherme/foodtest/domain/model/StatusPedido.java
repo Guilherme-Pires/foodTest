@@ -2,8 +2,19 @@ package com.guilherme.foodtest.domain.model;
 
 public enum StatusPedido {
 
-	CRIADO,
-	CONFIRMADO,
-	ENTREGUE,
-	CANCELADO
+	CRIADO("Criado"),
+	CONFIRMADO("Confirmado"),
+	ENTREGUE("Entregue"),
+	CANCELADO("Cancelado");
+	
+	private String descricao;
+	
+	StatusPedido(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	public String getDescricao() {
+		return this.descricao;
+	}
+	
 }

@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.guilherme.foodtest.api.model.EnderecoModel;
+import com.guilherme.foodtest.api.model.input.ItemPedidoInput;
 import com.guilherme.foodtest.domain.model.Endereco;
+import com.guilherme.foodtest.domain.model.ItemPedido;
 
 @Configuration
 public class ModelMapperConfig {
@@ -17,7 +19,11 @@ public class ModelMapperConfig {
 //		modelMapper.createTypeMap(Restaurante.class, RestauranteModel.class)
 //			.addMapping(Restaurante::getTaxaFrete, RestauranteModel::setPrecoFrete);
 		
-		var enderecoToEnderecoModelTypeMap = modelMapper.createTypeMap(Endereco.class, EnderecoModel.class);
+		modelMapper.createTypeMap(ItemPedidoInput.class, ItemPedido.class)
+			.addMappings(mapper -> mapper.skip(ItemPedido::setId));
+		
+		var enderecoToEnderecoModelTypeMap = modelMapper.createTypeMap(
+				Endereco.class, EnderecoModel.class);
 		
 		enderecoToEnderecoModelTypeMap.<String>addMapping(
 				enderecoSrc -> enderecoSrc.getCidade().getEstado().getNome(),
