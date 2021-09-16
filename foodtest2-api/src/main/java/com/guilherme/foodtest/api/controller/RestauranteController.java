@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.guilherme.foodtest.api.assembler.RestauranteInputDisassembler;
 import com.guilherme.foodtest.api.assembler.RestauranteModelAssembler;
 import com.guilherme.foodtest.api.model.RestauranteModel;
 import com.guilherme.foodtest.api.model.input.RestauranteInput;
+import com.guilherme.foodtest.api.model.view.RestauranteView;
 import com.guilherme.foodtest.domain.exception.CidadeNaoEncontradaException;
 import com.guilherme.foodtest.domain.exception.CozinhaNaoEncontradaException;
 import com.guilherme.foodtest.domain.exception.NegocioException;
@@ -44,10 +46,52 @@ public class RestauranteController {
 	@Autowired
 	private RestauranteInputDisassembler restauranteInputDisassembler;
 	
+	@JsonView(RestauranteView.Resumo.class)
 	@GetMapping
 	public List<RestauranteModel> listar() {
 		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
 	}
+	
+	@JsonView(RestauranteView.ApenasNome.class)
+	@GetMapping(params = "projecao=apenas-nome")
+	public List<RestauranteModel> listarApenasNomes() {
+		return listar();
+	}
+	
+//	@GetMapping
+//	public MappingJacksonValue listar(@RequestParam(required = false) String projecao) {
+//		List<Restaurante> restaurantes = restauranteRepository.findAll();
+//		List<RestauranteModel> restaurantesModel = restauranteModelAssembler.toCollectionModel(restaurantes);
+//		
+//		MappingJacksonValue restaurantesWrapper = new MappingJacksonValue(restaurantesModel);
+//		
+//		restaurantesWrapper.setSerializationView(RestauranteView.Resumo.class);
+//		
+//		if ("apenas-nome".equals(projecao)) {
+//			restaurantesWrapper.setSerializationView(RestauranteView.ApenasNome.class);
+//		} else if ("completo".equals(projecao)) {
+//			restaurantesWrapper.setSerializationView(null);
+//		}
+//		
+//		return restaurantesWrapper;
+//	}
+	
+//	@GetMapping
+//	public List<RestauranteModel> listar() {
+//		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
+//	}
+//	
+//	@JsonView(RestauranteView.Resumo.class)
+//	@GetMapping(params = "projecao=resumo")
+//	public List<RestauranteModel> listarResumido() {
+//		return listar();
+//	}
+//
+//	@JsonView(RestauranteView.ApenasNome.class)
+//	@GetMapping(params = "projecao=apenas-nome")
+//	public List<RestauranteModel> listarApenasNomes() {
+//		return listar();
+//	}
 	
 	@GetMapping("/{restauranteId}")
 	public RestauranteModel buscar(@PathVariable Long restauranteId) {
