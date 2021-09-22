@@ -25,7 +25,9 @@ import com.guilherme.foodtest.domain.exception.NegocioException;
 import com.guilherme.foodtest.domain.model.Pedido;
 import com.guilherme.foodtest.domain.model.Usuario;
 import com.guilherme.foodtest.domain.repository.PedidoRepository;
+import com.guilherme.foodtest.domain.repository.filter.PedidoFilter;
 import com.guilherme.foodtest.domain.service.EmissaoPedidoService;
+import com.guilherme.foodtest.infrastructure.repository.spec.PedidoSpecs;
 
 @RestController
 @RequestMapping(value = "/pedidos")
@@ -47,8 +49,8 @@ public class PedidoController {
 	private PedidoInputDisassembler pedidoInputDisassembler;
 	
 	@GetMapping
-	public List<PedidoResumoModel> listar() {
-		List<Pedido> todosPedidos = pedidoRepository.findAll();
+	public List<PedidoResumoModel> pesquisar(PedidoFilter filtro) {
+		List<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro));
 		
 		return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
 	}
