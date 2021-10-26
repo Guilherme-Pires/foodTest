@@ -28,10 +28,10 @@ import com.guilherme.foodtest.api.model.input.PedidoInput;
 import com.guilherme.foodtest.core.data.PageableTranslator;
 import com.guilherme.foodtest.domain.exception.EntidadeNaoEncontradaException;
 import com.guilherme.foodtest.domain.exception.NegocioException;
+import com.guilherme.foodtest.domain.filter.PedidoFilter;
 import com.guilherme.foodtest.domain.model.Pedido;
 import com.guilherme.foodtest.domain.model.Usuario;
 import com.guilherme.foodtest.domain.repository.PedidoRepository;
-import com.guilherme.foodtest.domain.repository.filter.PedidoFilter;
 import com.guilherme.foodtest.domain.service.EmissaoPedidoService;
 import com.guilherme.foodtest.infrastructure.repository.spec.PedidoSpecs;
 

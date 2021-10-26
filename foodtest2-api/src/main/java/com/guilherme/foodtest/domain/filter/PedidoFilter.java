@@ -1,4 +1,4 @@
-package com.guilherme.foodtest.domain.repository.filter;
+package com.guilherme.foodtest.domain.filter;
 
 import java.time.OffsetDateTime;
 
