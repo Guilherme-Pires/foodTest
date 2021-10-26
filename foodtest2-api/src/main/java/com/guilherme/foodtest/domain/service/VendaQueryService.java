@@ -7,6 +7,6 @@ import com.guilherme.foodtest.domain.model.dto.VendaDiaria;
 
 public interface VendaQueryService {
 	
-	List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filro);
+	List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filro, String timeOffSet);
 	
 }
