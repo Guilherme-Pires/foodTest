@@ -1,4 +1,4 @@
-package com.guilherme.foodtest.infrastructure.service;
+package com.guilherme.foodtest.infrastructure.service.query;
 
 import java.util.ArrayList;
 import java.util.Date;
